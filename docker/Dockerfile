@@ -1,4 +1,4 @@
-FROM nvidia/cudagl:11.1.1-base-ubuntu18.04
+FROM nvidia/cudagl:11.1.1-devel-ubuntu20.04
 
 ARG UID=1000
 ARG GID=1000
@@ -34,6 +34,7 @@ RUN sudo apt-get -y install \
     python3-dev \
     python3-setuptools \
     apt-utils \
+    git \
     bash-completion
 
 RUN echo 'debconf debconf/frontend select Noninteractive' | sudo debconf-set-selections
@@ -44,10 +45,14 @@ RUN sudo apt-get install -y \
     tk8.6-dev python3-tk libharfbuzz-dev libfribidi-dev libxcb1-dev
 
 # updating alternatives to use python3 and pip3
-RUN sudo update-alternatives --install /usr/bin/pip pip /usr/bin/pip3 1 && \
-    sudo update-alternatives --install /usr/bin/python python /usr/bin/python3 1
+RUN sudo update-alternatives --install /usr/bin/python python /usr/bin/python3 1
 
 # Install python deps
-RUN pip install torch==1.8.1+cu111 torchvision==0.9.1+cu111 torchaudio==0.8.1 typing_extensions==4.1.1 -f https://download.pytorch.org/whl/torch_stable.html
+RUN pip install torch==1.8.1+cu111 torchvision==0.9.1+cu111 torchaudio==0.8.1 -f https://download.pytorch.org/whl/torch_stable.html
+
+# Install python deps from requirements.txt
+RUN echo "export PATH=/home/${USERNAME}/.local/bin:\$PATH" >> ~/.bashrc 
+COPY --chown=${UID}:${GID} requirements.txt /tmp/requirements.txt
+RUN pip install -r /tmp/requirements.txt
 
 WORKDIR /home/$USERNAME/ws
