@@ -55,4 +55,6 @@ RUN echo "export PATH=/home/${USERNAME}/.local/bin:\$PATH" >> ~/.bashrc
 COPY --chown=${UID}:${GID} requirements.txt /tmp/requirements.txt
 RUN pip install -r /tmp/requirements.txt
 
+RUN setfacl -R -m u:${USERNAME}:rwx /usr/local/
+
 WORKDIR /home/$USERNAME/ws
