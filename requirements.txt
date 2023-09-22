@@ -7,4 +7,6 @@ pyyaml
 scikit-image
 tqdm
 spconv-cu111
+opencv-python
+prefetch_generator
 --find-links https://download.pytorch.org/whl/torch_stable.html
