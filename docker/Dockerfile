@@ -20,11 +20,11 @@ RUN useradd -m $USERNAME && \
     groupmod --gid $GID $USERNAME && \
     touch /home/${USERNAME}/.sudo_as_admin_successful
 
-# Set permissions for the user
+# Install sudo for the user
 RUN apt-get update && \
-    apt-get install -y acl sudo && \
-    setfacl -R -m u:${USERNAME}:rwx /usr/local/
+    apt-get install -y sudo
 
+# Commands after this will run as the user and NOT as root
 USER ${USERNAME}
 
 # Install apt deps
@@ -35,7 +35,8 @@ RUN sudo apt-get -y install \
     python3-setuptools \
     apt-utils \
     git \
-    bash-completion
+    bash-completion \
+    acl
 
 RUN echo 'debconf debconf/frontend select Noninteractive' | sudo debconf-set-selections
 
@@ -55,6 +56,7 @@ RUN echo "export PATH=/home/${USERNAME}/.local/bin:\$PATH" >> ~/.bashrc
 COPY --chown=${UID}:${GID} requirements.txt /tmp/requirements.txt
 RUN pip install -r /tmp/requirements.txt
 
-RUN setfacl -R -m u:${USERNAME}:rwx /usr/local/
+# Set permissions for the user
+RUN sudo setfacl -R -m u:${USERNAME}:rwx /usr/local/
 
 WORKDIR /home/$USERNAME/ws
