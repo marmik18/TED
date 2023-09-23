@@ -1,6 +1,6 @@
-numpy
+numpy<1.23
 torch==1.8.1+cu111
-numba
+numba==0.56.0
 tensorboardX
 easydict
 pyyaml
@@ -9,4 +9,5 @@ tqdm
 spconv-cu111
 opencv-python
 prefetch_generator
+matplotlib
 --find-links https://download.pytorch.org/whl/torch_stable.html
