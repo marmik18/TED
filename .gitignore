@@ -1,0 +1,15 @@
+data/kitti/training
+data/kitti/testing
+data/kitti/gt_database
+data/kitti/gt_database_mm
+data/kitti/*.pkl
+data/kitti/*.zip
+
+
+tools/PENet/pe.pth.tar
+tools/TED-S.pth
+
+build
+output
+pcdet.egg-info
+__pycache__
