@@ -70,7 +70,7 @@ class KittiDataset(DatasetTemplate):
         return np.array(io.imread(img_file).shape[:2], dtype=np.int32)
 
     def get_label(self, idx):
-        label_file = self.root_split_path / 'label_2_semi' / ('%s.txt' % idx)
+        label_file = self.root_split_path / 'label_2' / ('%s.txt' % idx)
         assert label_file.exists()
         return object3d_kitti.get_objects_from_label(label_file)
 
@@ -125,8 +125,8 @@ class KittiDataset(DatasetTemplate):
             pc_info = {'num_features': 4, 'lidar_idx': sample_idx}
             info['point_cloud'] = pc_info
 
-            image_info = {'image_idx': sample_idx, 'image_shape': self.get_image_shape(sample_idx)}
-            info['image'] = image_info
+            # image_info = {'image_idx': sample_idx, 'image_shape': self.get_image_shape(sample_idx)}
+            # info['image'] = image_info
             calib = self.get_calib(sample_idx)
 
             P2 = np.concatenate([calib.P2, np.array([[0., 0., 0., 1.]])], axis=0)
@@ -173,8 +173,9 @@ class KittiDataset(DatasetTemplate):
                     calib = self.get_calib(sample_idx)
                     pts_rect = calib.lidar_to_rect(points[:, 0:3])
 
-                    fov_flag = self.get_fov_flag(pts_rect, info['image']['image_shape'], calib)
-                    pts_fov = points[fov_flag]
+                    # fov_flag = self.get_fov_flag(pts_rect, info['image']['image_shape'], calib)
+                    # pts_fov = points[fov_flag]
+                    pts_fov = points
                     corners_lidar = box_utils.boxes_to_corners_3d(gt_boxes_lidar)
                     num_points_in_gt = -np.ones(num_gt, dtype=np.int32)
 
@@ -359,11 +360,11 @@ class KittiDataset(DatasetTemplate):
         points = self.get_lidar(sample_idx)
         calib = self.get_calib(sample_idx)
 
-        img_shape = info['image']['image_shape']
-        if self.dataset_cfg.FOV_POINTS_ONLY:
-            pts_rect = calib.lidar_to_rect(points[:, 0:3])
-            fov_flag = self.get_fov_flag(pts_rect, img_shape, calib)
-            points = points[fov_flag]
+        # img_shape = info['image']['image_shape']
+        # if self.dataset_cfg.FOV_POINTS_ONLY:
+        #     pts_rect = calib.lidar_to_rect(points[:, 0:3])
+        #     fov_flag = self.get_fov_flag(pts_rect, img_shape, calib)
+        #     points = points[fov_flag]
 
         input_dict = {
             'points': points,
@@ -389,7 +390,7 @@ class KittiDataset(DatasetTemplate):
 
         data_dict = self.prepare_data(data_dict=input_dict)
 
-        data_dict['image_shape'] = img_shape
+        # data_dict['image_shape'] = img_shape
         return data_dict
 
 
