@@ -1,7 +1,7 @@
 data/kitti/training
 data/kitti/testing
-data/kitti/gt_database
-data/kitti/gt_database_mm
+data/kitti/gt_database*
+data/kitti/gt_database_mm*
 data/kitti/*.pkl
 data/kitti/*.zip
 
