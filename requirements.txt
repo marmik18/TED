@@ -10,4 +10,5 @@ spconv-cu111
 opencv-python
 prefetch_generator
 matplotlib
+networkx==3.1 
 --find-links https://download.pytorch.org/whl/torch_stable.html
