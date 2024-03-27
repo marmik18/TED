@@ -1,3 +1,4 @@
+# data/kitti
 data/kitti/training
 data/kitti/testing
 data/kitti/gt_database*
@@ -5,6 +6,10 @@ data/kitti/gt_database_mm*
 data/kitti/*.pkl
 data/kitti/*.zip
 
+# data/custom
+data/*/labels
+data/*/points
+data/*/gt_database
 
 tools/PENet/pe.pth.tar
 tools/TED-S.pth
