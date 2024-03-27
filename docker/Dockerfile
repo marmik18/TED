@@ -1,4 +1,4 @@
-FROM nvidia/cudagl:11.1.1-devel-ubuntu20.04
+FROM nvcr.io/nvidia/cuda:12.2.2-devel-ubuntu20.04
 
 ARG UID=1000
 ARG GID=1000
