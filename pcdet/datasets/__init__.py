@@ -5,6 +5,7 @@ from torch.utils.data import DistributedSampler as _DistributedSampler
 from pcdet.utils import common_utils
 
 from .dataset import DatasetTemplate
+from .custom.custom_dataset import CustomDataset
 from .kitti.kitti_dataset import KittiDataset
 from .kitti.kitti_dataset_mm import KittiDatasetMM
 
@@ -13,6 +14,7 @@ from prefetch_generator import BackgroundGenerator
 
 __all__ = {
     'DatasetTemplate': DatasetTemplate,
+    'CustomDataset': CustomDataset,
     'KittiDataset': KittiDataset,
     'KittiDatasetMM': KittiDatasetMM
 }
