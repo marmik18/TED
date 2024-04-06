@@ -22,6 +22,7 @@ from pcdet.datasets import DatasetTemplate
 from pcdet.models import build_network, load_data_to_gpu
 from pcdet.utils import common_utils
 from pcdet.models.model_utils import model_nms_utils
+from pcdet.datasets.augmentor.augmentor_utils import global_rotation, global_scaling
 
 class DemoDataset(DatasetTemplate):
     def __init__(self, dataset_cfg, class_names, training=True, root_path=None, logger=None, ext='.bin'):
@@ -59,6 +60,7 @@ class DemoDataset(DatasetTemplate):
             'frame_id': index,
         }
 
+        # points are transformed (rotated and scaled) in the data pre-processing step
         data_dict = self.prepare_data(data_dict=input_dict)
         return data_dict
 
@@ -82,7 +84,7 @@ def parse_config():
 def main():
     args, cfg = parse_config()
     logger = common_utils.create_logger()
-    logger.info('-----------------Quick Demo of OpenPCDet-------------------------')
+    logger.info(f'-----------------Quick Demo of {os.path.basename(args.cfg_file).split(".")[0]}-------------------------')
     demo_dataset = DemoDataset(
         dataset_cfg=cfg.DATA_CONFIG, class_names=cfg.CLASS_NAMES, training=False,
         root_path=Path(args.data_path), ext=args.ext, logger=logger
@@ -99,7 +101,7 @@ def main():
             data_dict = demo_dataset.collate_batch([data_dict])
             load_data_to_gpu(data_dict)
             # print(len(model.forward(data_dict)))
-            pred_dicts, _, _ = model.forward(data_dict)
+            pred_dicts, _, batch_dict = model.forward(data_dict)
             
             # if the model is trained with WBF, then we need to apply nms to the predictions to get the final results
             if 'WBF' in pred_dicts[0]:
@@ -112,9 +114,14 @@ def main():
                 pred_labels = pred_dicts[0]['pred_labels']
                 pred_scores = pred_dicts[0]['pred_scores']
                 pred_boxes = pred_dicts[0]['pred_boxes']
-                
+            
+            rotation_angle = cfg.DATA_CONFIG.X_TRANS.AUG_CONFIG_LIST[0].WORLD_ROT_ANGLE[0]
+            scale = cfg.DATA_CONFIG.X_TRANS.AUG_CONFIG_LIST[2].WORLD_SCALE_RANGE[0]
+            gt_boxes, points, _ = global_rotation(pred_boxes, batch_dict['points'].cpu().numpy(), [rotation_angle, rotation_angle])
+            gt_boxes, points, _ = global_scaling(gt_boxes, points, [scale, scale+0.01])
+
             V.draw_scenes(
-                points=data_dict['points'][:, 1:], ref_boxes=pred_boxes,
+                points=batch_dict["points"][:, 1:], ref_boxes=gt_boxes,
                 ref_scores=pred_scores, ref_labels=pred_labels
             )
 
