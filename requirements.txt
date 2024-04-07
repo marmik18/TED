@@ -7,7 +7,7 @@ pyyaml
 scikit-image==0.19.2
 tqdm
 torch-tb-profiler==0.4.3
-protobuf
+protobuf>5
 waymo-open-dataset-tf-2-5-0
 nuscenes-devkit==1.0.5
 spconv-cu111
@@ -26,3 +26,4 @@ pybind11
 tensorboard
 Cython
 prefetch-generator
+tensorflow==2.9.1
