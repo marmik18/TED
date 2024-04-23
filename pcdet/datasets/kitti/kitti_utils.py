@@ -11,7 +11,6 @@ def transform_annotations_to_kitti_format(annos, map_name_to_kitti=None, info_wi
     Returns:
 
     """
-    print("annos:", annos)
     for anno in annos:
         # For lyft and nuscenes, different anno key in info
         if 'name' not in anno:
@@ -19,8 +18,6 @@ def transform_annotations_to_kitti_format(annos, map_name_to_kitti=None, info_wi
             anno.pop('gt_names')
 
         for k in range(anno['name'].shape[0]):
-            print(anno['name'])
-            print(map_name_to_kitti)
             anno['name'][k] = map_name_to_kitti[anno['name'][k]]
 
         anno['bbox'] = np.zeros((len(anno['name']), 4))
