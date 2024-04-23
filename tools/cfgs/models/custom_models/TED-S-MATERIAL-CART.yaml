@@ -24,11 +24,11 @@ DATA_CONFIG:
               DB_INFO_PATH:
                   - custom_dbinfos_train.pkl
               PREPARE: {
-                  filter_by_min_points: ['material_cart:5' , 'table:5'],
+                  filter_by_min_points: ['material_cart:5'],
                   filter_by_difficulty: [-1],
               }
 
-              SAMPLE_GROUPS: ['material_cart:10', 'table:10']
+              SAMPLE_GROUPS: ['material_cart:10']
               NUM_POINT_FEATURES: 4
               DATABASE_WITH_FAKELIDAR: False
               REMOVE_EXTRA_WIDTH: [0.0, 0.0, -0.2]
@@ -39,11 +39,11 @@ DATA_CONFIG:
               DB_INFO_PATH:
                 - custom_dbinfos_train.pkl
               PREPARE: {
-                filter_by_min_points: ['material_cart:5', 'table:5'],
+                filter_by_min_points: ['material_cart:5'],
                 filter_by_difficulty: [-1],
               }
 
-              SAMPLE_GROUPS: ['material_cart:10', 'table:10']
+              SAMPLE_GROUPS: ['material_cart:10']
 
               MIN_SAMPLING_DIS: 0
               MAX_SAMPLING_DIS: 20
@@ -152,23 +152,13 @@ MODEL:
         ANCHOR_GENERATOR_CONFIG: [
             {
                 'class_name': 'material_cart',
-                'anchor_sizes': [[3.9, 1.6, 1.56]],
+                'anchor_sizes': [[1.0, 0.86, 1.65]],
                 'anchor_rotations': [0, 1.57],
-                'anchor_bottom_heights': [-1.78],
+                'anchor_bottom_heights': [0],
                 'align_center': False,
                 'feature_map_stride': 8,
-                'matched_threshold': 0.6,
-                'unmatched_threshold': 0.45
-            },
-            {
-                'class_name': 'table',
-                'anchor_sizes': [[3.9, 1.6, 1.56]],
-                'anchor_rotations': [0, 1.57],
-                'anchor_bottom_heights': [-1.78],
-                'align_center': False,
-                'feature_map_stride': 8,
-                'matched_threshold': 0.6,
-                'unmatched_threshold': 0.45
+                'matched_threshold': 0.5,
+                'unmatched_threshold': 0.35
             }
         ]
         TARGET_ASSIGNER_CONFIG:
@@ -277,7 +267,7 @@ MODEL:
 
 OPTIMIZATION:
     BATCH_SIZE_PER_GPU: 2
-    NUM_EPOCHS: 40
+    NUM_EPOCHS: 10
 
     OPTIMIZER: adam_onecycle
     LR: 0.01

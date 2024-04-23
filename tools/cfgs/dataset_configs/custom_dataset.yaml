@@ -1,10 +1,10 @@
 DATASET: 'CustomDataset'
 DATA_PATH: '../data/custom'
 
-POINT_CLOUD_RANGE: [0, -40, -3, 70.4, 40, 1]
+POINT_CLOUD_RANGE: [0, -40, -1, 70.4, 40, 3]
 
 MAP_CLASS_TO_KITTI: {
-    'table': 'Car',
+    'working_pillar': 'Car',
     'material_cart': 'Pedestrian',
 }
 
@@ -43,10 +43,10 @@ DATA_AUGMENTOR:
           DB_INFO_PATH:
               - custom_dbinfos_train.pkl
           PREPARE: {
-             filter_by_min_points: ['material_cart:5', 'table:5'],
+             filter_by_min_points: ['material_cart:5', 'working_pillar:5'],
           }
 
-          SAMPLE_GROUPS: ['material_cart:20', 'table:15']
+          SAMPLE_GROUPS: ['material_cart:20', 'working_pillar:15']
           NUM_POINT_FEATURES: 4
           DATABASE_WITH_FAKELIDAR: False
           REMOVE_EXTRA_WIDTH: [0.0, 0.0, 0.0]
