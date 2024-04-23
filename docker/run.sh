@@ -13,4 +13,4 @@ python train.py --cfg_file cfgs/models/custom_models/TED-S.yaml
 python test.py --cfg_file cfgs/models/custom_models/TED-S.yaml
 
 # Run the visualization
-python demo.py --cfg_file cfgs/models/custom_models/TED-S.yaml --ckpt ../output/TED-S/default/ckpt/checkpoint_epoch_80.pth --data_path ../data/custom_dataset/points
+python demo.py --cfg_file cfgs/models/custom_models/TED-S.yaml --ckpt ../output/models/custom_models/TED-S/default/ckpt/checkpoint_epoch_80.pth --data_path ../data/custom/points/ --ext .npy
