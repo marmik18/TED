@@ -2,7 +2,7 @@
 
 # PARAMETERS can be passed as environment variables 
 if [[ -z "${IMAGE_NAME}" ]]; then
-  IMAGE_NAME="temp/ted"
+  IMAGE_NAME="wzl/point-cloud-pose-estimation-training"
 fi
 if [[ -z "${IMAGE_TAG}" ]]; then
   IMAGE_TAG=latest
@@ -15,25 +15,6 @@ if [[ -z "${DOCKER_USER}" ]]; then
 fi
 if [[ -z "${CONTAINER_NAME}" ]]; then
   CONTAINER_NAME="ted_container"
-fi
-# ---------------------------------------------------------------------------- #
-#                                  BUILD ARGS                                  #
-# ---------------------------------------------------------------------------- #
-if [[ -z "${DOCKER_BUILD_ARGS}" ]]; then
-  DOCKER_BUILD_ARGS=()  # additional arguments for 'docker build'
-else
-  DOCKER_BUILD_ARGS=(${DOCKER_BUILD_ARGS})
-fi
-
-GROUPID=$(id -g)
-USERID=$(id -u)
-DOCKER_BUILD_ARGS+=("--build-arg GID=$GROUPID")
-DOCKER_BUILD_ARGS+=("--build-arg USERNAME=${DOCKER_USER}")
-DOCKER_BUILD_ARGS+=("--build-arg UID=$USERID")
-
-# build image from the docker file if it does not exits
-if [  ! "$(docker image ls -q -f reference=$IMAGE)" ]; then
-    docker build -t $IMAGE -f docker/Dockerfile ${DOCKER_BUILD_ARGS[@]} .
 fi
 
 # ---------------------------------------------------------------------------- #
@@ -60,13 +41,11 @@ DOCKER_RUN_ARGS+=("--tty")
 DOCKER_RUN_ARGS+=("--net=host")
 DOCKER_RUN_ARGS+=("--privileged")
 DOCKER_RUN_ARGS+=("--rm")
-DOCKER_RUN_ARGS+=("--user $USERID:$GROUPID")
-DOCKER_RUN_ARGS+=("--volume `pwd`:/home/${DOCKER_USER}/ws")
+DOCKER_RUN_ARGS+=("--volume `pwd`:/root/ws")
 DOCKER_RUN_ARGS+=("--volume $XSOCK:$XSOCK:rw")
 DOCKER_RUN_ARGS+=("--volume $XAUTH:$XAUTH:rw ")
 DOCKER_RUN_ARGS+=("--env XAUTHORITY=${XAUTH}")
 DOCKER_RUN_ARGS+=("--env DISPLAY=${DISPLAY}")
-DOCKER_RUN_ARGS+=("--env USER=${DOCKER_USER}")
 
 # if there is no container with the name 'ros_container'
 if [ ! "$(docker ps -aq -f name=$CONTAINER_NAME)" ]; then
