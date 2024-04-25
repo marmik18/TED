@@ -7,7 +7,7 @@ pyyaml
 scikit-image==0.19.2
 tqdm
 torch-tb-profiler==0.4.3
-protobuf
+protobuf==3.20
 spconv-cu111
 scipy
 fire
