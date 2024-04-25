@@ -60,3 +60,5 @@ RUN pip install -r /tmp/requirements.txt
 RUN sudo setfacl -R -m u:${USERNAME}:rwx /usr/local/
 
 WORKDIR /home/$USERNAME/ws
+
+COPY --chown=${UID}:${GID} . .
