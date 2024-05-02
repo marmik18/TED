@@ -1,21 +1,13 @@
-# data
-data/*/labels
-data/*/points
-data/*/gt_database
-data/*/training
-data/*/testing
-data/*/gt_database*
-data/*/gt_database_mm*
+
 *.pkl
 *.zip
+*.pth.tar
+*.pth
 
-tools/PENet/pe.pth.tar
-tools/TED-S.pth
-
+data
 build
 install
 log
 output
 pcdet.egg-info
 __pycache__
-ops
