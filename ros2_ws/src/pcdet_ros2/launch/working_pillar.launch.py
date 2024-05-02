@@ -12,7 +12,7 @@ from nav2_common.launch import RewrittenYaml
 def generate_launch_description():
     package_name = 'pcdet_ros2'
     package_dir = get_package_share_directory(package_name)
-    config_file = 'pcdet_pvrcnn.param.yaml'
+    config_file = 'ted.working-pillar.param.yaml'
 
     namespace = LaunchConfiguration('namespace')
     params_file = LaunchConfiguration('params_file')
@@ -44,7 +44,7 @@ def generate_launch_description():
 
     declare_output_topic_cmd = DeclareLaunchArgument(
         'output_topic',
-        default_value='/kairosAB/ouster/detections',
+        default_value='/kairosAB/ouster/detections/working_pillar',
         description='Output Object Detections'
     )
 
