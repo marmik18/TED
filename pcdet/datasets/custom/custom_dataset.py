@@ -125,7 +125,7 @@ class CustomDataset(DatasetTemplate):
             )
             kitti_class_names = [map_name_to_kitti[x] for x in class_names]
             ap_result_str, ap_dict = kitti_eval.get_official_eval_result(
-                gt_annos=eval_gt_annos, dt_annos=eval_det_annos, current_classes=kitti_class_names
+                gt_annos=eval_gt_annos, dt_annos=eval_det_annos, current_classes=kitti_class_names, filter_range=self.dataset_cfg.POINT_CLOUD_RANGE
             )
             return ap_result_str, ap_dict
 
