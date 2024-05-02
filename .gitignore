@@ -13,6 +13,8 @@ tools/PENet/pe.pth.tar
 tools/TED-S.pth
 
 build
+install
+log
 output
 pcdet.egg-info
 __pycache__
