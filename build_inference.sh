@@ -4,7 +4,6 @@ IMAGE_TAG=latest
 IMAGE_NAME=wzl/point-cloud-pose-estimation-inference
 
 IMAGE="$IMAGE_NAME:$IMAGE_TAG"
-echo $@
 # ---------------------------------------------------------------------------- #
 #                               Docker Build Args                              #
 # ---------------------------------------------------------------------------- #
