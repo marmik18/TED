@@ -26,7 +26,7 @@ IMAGE="$IMAGE_NAME:$IMAGE_TAG"
 #                               Docker Build Args                              #
 # ---------------------------------------------------------------------------- #
 if [[ -z "${DOCKER_BUILD_FILE}" ]]; then
-  DOCKER_BUILD_FILE="docker/Dockerfile"
+  DOCKER_BUILD_FILE="docker/Dockerfile.training"
 fi
 
 
