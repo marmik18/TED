@@ -157,8 +157,8 @@ MODEL:
                 'anchor_bottom_heights': [0],
                 'align_center': False,
                 'feature_map_stride': 8,
-                'matched_threshold': 0.5,
-                'unmatched_threshold': 0.35
+                'matched_threshold': 0.6,
+                'unmatched_threshold': 0.45
             }
         ]
         TARGET_ASSIGNER_CONFIG:
