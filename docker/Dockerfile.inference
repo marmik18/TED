@@ -51,9 +51,9 @@ RUN apt install -y ros-foxy-rmw-cyclonedds-cpp
 #                              OpenPCDet Workspace                             #
 # ---------------------------------------------------------------------------- #
 WORKDIR /root/OpenPCDet
-COPY pcdet ./pcdet
-COPY tools ./tools
-COPY ["setup.py", "requirements.txt", "/root/OpenPCDet/"]
+COPY training/pcdet pcdet
+COPY training/tools tools
+COPY ["training/setup.py", "training/requirements.txt", "/root/OpenPCDet/"]
 
 RUN pip install -r requirements.txt
 #---------------------------------------------------------------------------- #
@@ -66,7 +66,7 @@ COPY ros2_ws .
 # Install ROS2 dependencies
 RUN rosdep init && rosdep update
 RUN rosdep install --from-paths src --ignore-src -r -y
-RUN apt install -y ros-foxy-ament-cmake-nose ros-foxy-vision-msgs ros-foxy-tf-transformations
+RUN apt install -y ros-foxy-ament-cmake-nose ros-foxy-vision-msgs ros-foxy-tf-transformations ros-foxy-nav2-common
 RUN pip install install nose transforms3d
 # Build the ROS2 workspace
 RUN . /opt/ros/foxy/setup.bash && \
@@ -75,4 +75,4 @@ RUN . /opt/ros/foxy/setup.bash && \
 WORKDIR /root/
 COPY docker/entrypoints/inference.sh .
 
-ENTRYPOINT [ "/root/inference.sh" ]
+ENTRYPOINT [ "/root/inference.sh", "-l" ]

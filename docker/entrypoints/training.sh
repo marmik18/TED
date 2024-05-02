@@ -1,4 +1,27 @@
 #!/bin/bash
+
+helpFunction()
+{
+    echo ""
+    echo "Usage: $0 -c [path-to-config-file]"
+    echo "Options:"
+    echo -e "\t-c: Path to the config file"
+    exit 1
+}
+
+
+while getopts "c:" opt; do
+    case $opt in
+        c) CONFIG_PATH=$OPTARG;;
+        *) helpFunction ;;
+      esac
+done
+
+if [ -z "$CONFIG_PATH" ]; then
+    echo "Please provide the path to the config file"
+    helpFunction
+fi
+
 # Install the requirements
 python setup.py develop
 
@@ -7,10 +30,4 @@ python -m pcdet.datasets.custom.custom_dataset create_custom_infos tools/cfgs/da
 
 # Run the training
 cd tools
-python train.py --cfg_file cfgs/models/custom_models/TED-S.yaml
-
-# Run the evaluation
-python test.py --cfg_file cfgs/models/custom_models/TED-S.yaml
-
-# Run the visualization
-python demo.py --cfg_file cfgs/models/custom_models/TED-S.yaml --ckpt ../output/models/custom_models/TED-S/default/ckpt/checkpoint_epoch_80.pth --data_path ../data/custom/points/ --ext .npy
+python train.py --cfg_file $CONFIG_PATH
