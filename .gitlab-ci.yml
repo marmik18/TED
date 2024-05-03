@@ -1,0 +1,32 @@
+stages:
+  - build
+
+before_script:
+  - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+  - echo $NGC_API_KEY | docker login nvcr.io -u '$oauthtoken' --password-stdin
+
+build_training_container:
+  image: docker:20.10
+  stage: build
+  only:
+    - main
+    - development
+  script:
+    - docker build -t $CI_REGISTRY/$CI_PROJECT_PATH/training:latest -f docker/Dockerfile.training .
+    - docker push $CI_REGISTRY/$CI_PROJECT_PATH/training:latest
+  tags:
+    - docker
+    - build
+
+build_inference_container:
+  image: docker:20.10
+  stage: build
+  only:
+    - main
+    - development
+  script:
+    - docker build -t $CI_REGISTRY/$CI_PROJECT_PATH/inference:latest -f docker/Dockerfile.inference .
+    - docker push $CI_REGISTRY/$CI_PROJECT_PATH/inference:latest
+  tags:
+    - docker
+    - build

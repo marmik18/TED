@@ -1,0 +1,13 @@
+
+*.pkl
+*.zip
+*.pth.tar
+*.pth
+
+data
+build
+install
+log
+output
+pcdet.egg-info
+__pycache__
