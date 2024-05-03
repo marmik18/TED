@@ -36,4 +36,5 @@ COPY ["training/setup.py", "training/requirements.txt", "/root/OpenPCDet/"]
 RUN pip install -r requirements.txt
 
 COPY docker/entrypoints/training.sh .
+COPY docker/entrypoints/training_dist.sh .
 ENTRYPOINT [ "./training.sh", "-c" ]
