@@ -12,8 +12,8 @@ build_training_container:
     - main
     - development
   script:
-    - docker build -t $CI_REGISTRY/$CI_PROJECT_PATH-training:latest -f docker/Dockerfile.training .
-    - docker push $CI_REGISTRY/$CI_PROJECT_PATH-training:latest
+    - docker build -t $CI_REGISTRY/$CI_PROJECT_PATH/training:latest -f docker/Dockerfile.training .
+    - docker push $CI_REGISTRY/$CI_PROJECT_PATH/training:latest
   tags:
     - docker
     - build
@@ -25,8 +25,8 @@ build_inference_container:
     - main
     - development
   script:
-    - docker build -t $CI_REGISTRY/$CI_PROJECT_PATH-inference:latest -f docker/Dockerfile.inference .
-    - docker push $CI_REGISTRY/$CI_PROJECT_PATH-inference:latest
+    - docker build -t $CI_REGISTRY/$CI_PROJECT_PATH/inference:latest -f docker/Dockerfile.inference .
+    - docker push $CI_REGISTRY/$CI_PROJECT_PATH/inference:latest
   tags:
     - docker
     - build
