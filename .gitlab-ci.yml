@@ -25,6 +25,7 @@ build_inference_container:
     - main
     - development
   script:
+    - sudo apt-get install -y git
     - git submodule update --init --recursive
     - docker build -t $CI_REGISTRY/$CI_PROJECT_PATH/inference:latest -f docker/Dockerfile.inference .
     - docker push $CI_REGISTRY/$CI_PROJECT_PATH/inference:latest
