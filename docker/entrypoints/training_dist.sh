@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 helpFunction()
 {
@@ -30,4 +30,8 @@ python -m pcdet.datasets.custom.custom_dataset create_custom_infos tools/cfgs/da
 
 # Run the training
 cd tools
-./dist_train.sh --cfg_file $CONFIG_PATH
+
+# if NGPUS is not set, use 1
+NGPUS=${NGPUS:-1}
+
+python -m torch.distributed.launch --nproc_per_node=${NGPUS} train.py --launcher pytorch --cfg_file $CONFIG_PATH
