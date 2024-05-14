@@ -31,7 +31,4 @@ python -m pcdet.datasets.custom.custom_dataset create_custom_infos tools/cfgs/da
 # Run the training
 cd tools
 
-# if NGPUS is not set, use 1
-NGPUS=${NGPUS:-1}
-
-python -m torch.distributed.launch --nproc_per_node=${NGPUS} train.py --launcher pytorch --cfg_file $CONFIG_PATH
+CUDA_VISIBLE_DEVICES=0,1 python3 -m torch.distributed.launch --nproc_per_node=2 train.py --launcher pytorch --cfg_file $CONFIG_PATH 
