@@ -30,11 +30,11 @@ RUN update-alternatives --install /usr/bin/python python /usr/bin/python3 1
 RUN pip install torch==1.8.1+cu111 torchvision==0.9.1+cu111 torchaudio==0.8.1 -f https://download.pytorch.org/whl/torch_stable.html
 
 WORKDIR /root/OpenPCDet/
-COPY training/pcdet pcdet
-COPY training/tools tools
 COPY ["training/setup.py", "training/requirements.txt", "/root/OpenPCDet/"]
 RUN pip install -r requirements.txt
 
+COPY training/pcdet pcdet
+COPY training/tools tools
 COPY docker/entrypoints/training.sh .
 COPY docker/entrypoints/training_dist.sh .
 ENTRYPOINT [ "./training.sh", "-c" ]
